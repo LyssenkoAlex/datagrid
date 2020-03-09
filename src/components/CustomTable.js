@@ -7,8 +7,10 @@ import  '../style/style.scss'
 export default function CustomTable() {
 
     const tableData = useSelector(state => state.tableData);
+    const selectedPage = useSelector(state => state.selectedPage);
+    const rowsPerPage = useSelector(state => state.rowsPerPage);
 
-    let cells = tableData.slice(0,300).map((row, index) =>
+    let cells = tableData.slice(selectedPage, selectedPage + rowsPerPage).map((row, index) =>
         <tr key={`row_${index}`}>
             <td key={`age_${index}`}>{row.Age}</td>
             <td key={`Country_${index}`}>{row.Country}</td>
