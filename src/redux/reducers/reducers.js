@@ -11,6 +11,7 @@ import {headers} from "../../utils/consts";
 
 const initialState = {
     tableData: rowData,
+    originalData:rowData,
     rowsPerPage: 10,
     selectedPage: 0,
     pageRange: [...Array(Math.ceil(rowData.length / 10)).keys()],
@@ -21,7 +22,6 @@ const initialState = {
 
 function directorsRootReducer(state = initialState, action) {
 
-    let filteredData = [];
     switch (action.type) {
         case SORT:
             return state;
@@ -62,11 +62,9 @@ function directorsRootReducer(state = initialState, action) {
             return Object.assign({}, state, {tableData: [...state.tableData]}, {tableHeaders: [...state.tableHeaders]});
 
         case FILTER:
-            return Object.assign({}, state, {tableData: [...state.tableData.filter((x) => x.OpSys === action.value)]} );
+            return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => x.OpSys === action.value)]} );
         case FILTER_AGE:
-            console.log('filter:', action.value)
-            filteredData = [...state.tableData.filter((x) => x.Age < action.value)];
-            return Object.assign({}, state, {tableData: filteredData} );
+            return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => x.Age < action.value)]} );
         default:
             return state;
     }

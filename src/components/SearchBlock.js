@@ -10,16 +10,13 @@ export function SearchBlock() {
     const [age, setAge] = React.useState('');
 
     const searchData = () => {
-            console.log('vals:' , value);
         dispatch(filterData(value));
     };
 
     const handleChange = event => {
         setAge(event.target.value);
         dispatch(filterAge(event.target.value));
-        console.log('age: ', age)
     };
-
 
     return (
         <form>
@@ -39,8 +36,5 @@ export function SearchBlock() {
                 <MenuItem value={85}>less than 85</MenuItem>
             </Select>
         </form>
-
-
     )
-
 }
