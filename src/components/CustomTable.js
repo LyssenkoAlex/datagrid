@@ -2,6 +2,7 @@
 import React, {useState} from 'react';
 import { useDispatch, useSelector} from 'react-redux'
 import  '../style/style.scss'
+import TableHeader from "./TableHeader";
 
 
 export default function CustomTable() {
@@ -30,6 +31,7 @@ export default function CustomTable() {
 
     return (
         <table>
+            <TableHeader/>
             <tbody>
             {cells}
             </tbody>
