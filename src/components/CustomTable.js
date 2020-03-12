@@ -41,7 +41,6 @@ export default function CustomTable() {
 
 function CellRender  ({value, index, type}) {
     let className;
-    let cellValue = value;
     if(type === 'Number') {
         className = 'numberBlock'
     }
@@ -54,7 +53,7 @@ function CellRender  ({value, index, type}) {
 
     return (
         <td key={`age_${index}`} className={className}>
-            <span className={className}>{cellValue}</span>
+            {value}
         </td>
     )
 }

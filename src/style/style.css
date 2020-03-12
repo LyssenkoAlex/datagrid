@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   box-sizing: border-box;
 }
@@ -111,6 +112,48 @@ tr:nth-child(even) td {
 
 .dropdown:hover .dropbtn {
   background-color: #3e8e41;
+}
+
+.Grid {
+  border: 1px solid #d9dddd;
+  width: 80%;
+}
+
+.GridItemEven,
+.GridItemOdd {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.GridItemEven {
+  background-color: #f8f8f0;
+}
+
+.searchBlock {
+  display: flex;
+  justify-content: center;
+}
+
+.numberBlock {
+  text-align: right;
+  color: #6c7ae0;
+}
+
+.textBlock {
+  text-align: left;
+  color: cadetblue;
+}
+
+span {
+  color: cadetblue;
+}
+
+.booleanBlock:before {
+  content: "";
+  font-family: "Material Icons", serif;
+  font-size: 20px;
+  color: #ff703e;
 }
 
 /*# sourceMappingURL=style.css.map */

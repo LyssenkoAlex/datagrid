@@ -148,12 +148,10 @@ tr:nth-child(even) td {
   color: cadetblue;
 }
 
-table > tr > td:before {
+
+.booleanBlock:before {
   content: "\e3ba";
   font-family: "Material Icons", serif;
-  display: block;
-  position: absolute;
-  right: 100%;
   font-size: 20px;
   color: rgb(255, 112, 62);
 }
