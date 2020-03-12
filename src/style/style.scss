@@ -73,7 +73,9 @@ tr:nth-child(even) td {
   color: white;
 }
 
-.pagination a:hover:not(.active) {background-color: #ddd;}
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+}
 
 .dropbtn {
   color: white;
@@ -88,7 +90,7 @@ tr:nth-child(even) td {
   display: none;
   position: fixed;
   background-color: #f1f1f1;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
@@ -99,10 +101,63 @@ tr:nth-child(even) td {
   display: block;
 }
 
-.dropdown-content a:hover {background-color: #ddd;}
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
 
-.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
 
-.dropdown:hover .dropbtn {background-color: #3e8e41;}
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+}
+
+.Grid {
+  border: 1px solid #d9dddd;
+  width: 80%;
+}
+
+.GridItemEven,
+.GridItemOdd {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.GridItemEven {
+  background-color: #f8f8f0;
+}
+
+.searchBlock {
+  display: flex;
+  justify-content: center;
+}
+
+.numberBlock {
+  text-align: right;
+  color: #6c7ae0;
+}
+
+.textBlock {
+  text-align: left;
+  color: cadetblue;
+}
+
+ span {
+  color: cadetblue;
+}
+
+table > tr > td:before {
+  content: "\e3ba";
+  font-family: "Material Icons", serif;
+  display: block;
+  position: absolute;
+  right: 100%;
+  font-size: 20px;
+  color: rgb(255, 112, 62);
+}
+
+
 
 

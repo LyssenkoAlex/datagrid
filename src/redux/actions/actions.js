@@ -3,7 +3,7 @@ export const SET_PAGE = 'SET_PAGE';
 export const MOVE_PAGE = 'MOVE_PAGE';
 export const SORT_COLUMN = 'SORT_COLUMN';
 export const FILTER = 'FILTER';
-export const FILTER_AGE = 'FILTER_AGE';
+export const FILTER_ITEM = 'FILTER_ITEM';
 
 
 export function sort(id) {
@@ -26,6 +26,6 @@ export function filterData(value) {
     return {type:FILTER, value}
 }
 
-export function filterAge(value) {
-    return {type:FILTER_AGE, value}
+export function filterItem(value) {
+    return {type:FILTER_ITEM, value}
 }

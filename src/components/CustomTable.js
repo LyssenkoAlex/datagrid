@@ -13,13 +13,13 @@ export default function CustomTable() {
 
     let cells = tableData.slice(selectedPage, selectedPage + rowsPerPage).map((row, index) =>
         <tr key={`row_${index}`}>
-            <td key={`age_${index}`}>{row.Age}</td>
+            <CellRender value={row.Age} index={index} type={'Number'}/>
             <td key={`Country_${index}`}>{row.Country}</td>
             <td key={`Employment_${index}`}>{row.Employment}</td>
             <td key={`Gender_${index}`}>{row.Gender}</td>
-            <td key={`Hobbyist_${index}`}>{row.Hobbyist}</td>
+            <CellRender value={row.Hobbyist} index={index} type={'Boolean'}/>
             <td key={`LanguageWorkedWith_${index}`}>{row.LanguageWorkedWith}</td>
-            <td key={`MainBranch_${index}`}>{row.MainBranch}</td>
+            <CellRender value={row.MainBranch} index={index} type={'String'}/>
             <td key={`OpSys_${index}`}>{row.OpSys}</td>
             <td key={`Respondent_${index}`}>{row.Respondent}</td>
             <td key={`Student_${index}`}>{row.Student}</td>
@@ -37,5 +37,25 @@ export default function CustomTable() {
             </tbody>
         </table>
     )
-
 }
+
+function CellRender  ({value, index, type}) {
+    let className;
+    let cellValue = value;
+    if(type === 'Number') {
+        className = 'numberBlock'
+    }
+    else if(type === 'Boolean') {
+        className = 'booleanBlock';
+    }
+    else {
+        className = 'textBlock'
+    }
+
+    return (
+        <td key={`age_${index}`} className={className}>
+            <span className={className}>{cellValue}</span>
+        </td>
+    )
+}
+

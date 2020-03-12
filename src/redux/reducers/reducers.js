@@ -1,5 +1,5 @@
 import {
-    FILTER, FILTER_AGE,
+    FILTER, FILTER_ITEM,
     MOVE_PAGE,
     SET_PAGE,
     SORT, SORT_COLUMN,
@@ -21,7 +21,7 @@ const initialState = {
 
 
 function directorsRootReducer(state = initialState, action) {
-
+    console.log('action: ', action)
     switch (action.type) {
         case SORT:
             return state;
@@ -63,8 +63,13 @@ function directorsRootReducer(state = initialState, action) {
 
         case FILTER:
             return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => x.OpSys === action.value)]} );
-        case FILTER_AGE:
-            return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => x.Age < action.value)]} );
+        case FILTER_ITEM:
+            if(action.value.TITLE === 'Number') {
+                return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => x[action.value.TITLE] < action.value.VALUE)]});
+            }
+            else {
+                return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => x[action.value.TITLE] === action.value.VALUE)]});
+            }
         default:
             return state;
     }
