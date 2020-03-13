@@ -4,6 +4,7 @@ export const MOVE_PAGE = 'MOVE_PAGE';
 export const SORT_COLUMN = 'SORT_COLUMN';
 export const FILTER = 'FILTER';
 export const FILTER_ITEM = 'FILTER_ITEM';
+export const COMPLEX_SORT = 'COMPLEX_SORT';
 
 
 export function sort(id) {
@@ -28,4 +29,8 @@ export function filterData(value) {
 
 export function filterItem(value) {
     return {type:FILTER_ITEM, value}
+}
+
+export function complexSort(value) {
+    return {type:COMPLEX_SORT, value}
 }

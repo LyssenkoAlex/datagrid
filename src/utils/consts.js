@@ -17,6 +17,9 @@ export  const headers = [
     , {TITLE: 'YearsCode', TYPE: 'String', SORT: 'ASC', DISPLAY:'Code', JSON:'YearsCode'}
 ] ;
 
+export const DATA_TYPES = {BOOLEAN_TYPE:'BOOLEAN_TYPE', NUMBER_TYPE:'NUMBER_TYPE', STRING_TYPE:'STRING_TYPE', OS:'OS' };
+
+
 headers.propTypes = {
     headers: PropTypes.shape({
             TITLE: PropTypes.string.isRequired,
@@ -25,6 +28,13 @@ headers.propTypes = {
             DISPLAY:PropTypes.string.isRequired
         }
     )
+};
+
+DATA_TYPES.propTypes = {
+    BOOLEAN_TYPE: PropTypes.string.isRequired,
+    NUMBER_TYPE: PropTypes.string.isRequired,
+    STRING_TYPE: PropTypes.string.isRequired,
+    OS:PropTypes.oneOf(['Windows', 'Linux-based', 'MacOS', 'BSD', 'NA'])
 };
 
 

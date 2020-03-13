@@ -1,8 +1,9 @@
-
 import React, {useState} from 'react';
-import { useDispatch, useSelector} from 'react-redux'
-import  '../style/style.scss'
+import {useDispatch, useSelector} from 'react-redux'
+import '../style/style.scss'
 import TableHeader from "./TableHeader";
+import {green} from '@material-ui/core/colors';
+import {DATA_TYPES} from "../utils/consts";
 
 
 export default function CustomTable() {
@@ -13,14 +14,14 @@ export default function CustomTable() {
 
     let cells = tableData.slice(selectedPage, selectedPage + rowsPerPage).map((row, index) =>
         <tr key={`row_${index}`}>
-            <CellRender value={row.Age} index={index} type={'Number'}/>
+            <CellRender value={row.Age} index={index} type={DATA_TYPES.NUMBER_TYPE}/>
             <td key={`Country_${index}`}>{row.Country}</td>
-            <td key={`Employment_${index}`}>{row.Employment}</td>
+            <CellRender value={row.Employment} index={index} type={DATA_TYPES.STRING_TYPE}/>
             <td key={`Gender_${index}`}>{row.Gender}</td>
-            <CellRender value={row.Hobbyist} index={index} type={'Boolean'}/>
+            <CellRender value={row.Hobbyist} index={index} type={DATA_TYPES.BOOLEAN_TYPE}/>
             <td key={`LanguageWorkedWith_${index}`}>{row.LanguageWorkedWith}</td>
-            <CellRender value={row.MainBranch} index={index} type={'String'}/>
-            <td key={`OpSys_${index}`}>{row.OpSys}</td>
+            <CellRender value={row.MainBranch} index={index} type={DATA_TYPES.STRING_TYPE}/>
+            <CellRender value={row.OpSys} index={index} type={DATA_TYPES.OS}/>
             <td key={`Respondent_${index}`}>{row.Respondent}</td>
             <td key={`Student_${index}`}>{row.Student}</td>
             <td key={`SurveyLength_${index}`}>{row.SurveyLength}</td>
@@ -39,20 +40,49 @@ export default function CustomTable() {
     )
 }
 
-function CellRender  ({value, index, type}) {
+function CellRender({value, index, type}) {
     let className;
-    if(type === 'Number') {
-        className = 'numberBlock'
-    }
-    else if(type === 'Boolean') {
-        className = 'booleanBlock';
-    }
-    else {
-        className = 'textBlock'
+
+    switch (type) {
+        case DATA_TYPES.NUMBER_TYPE:
+            className = 'numberBlock';
+            break;
+        case DATA_TYPES.STRING_TYPE:
+            className = 'textBlock';
+            break;
+        case DATA_TYPES.BOOLEAN_TYPE:
+            if (value === 'Yes') {
+                className = 'booleanBlockYes';
+                value = '';
+            } else {
+                className = 'booleanBlockNo';
+                value = '';
+            }
+            break;
+        case DATA_TYPES.OS:
+
+            switch (value) {
+                case  'Windows':
+                    className = 'windowLogo';
+                    break;
+                case  'Linux-based':
+                    className = 'linuxLogo';
+                    break;
+                case  'MacOS':
+                    className = 'macLogo';
+                    break;
+                case  'BSD':
+                    className = 'bsdLogo';
+                    break;
+            }
+            value = '';
+            break;
+        default:
+            className = ''
     }
 
     return (
-        <td key={`age_${index}`} className={className}>
+        <td key={`td_${index}`} className={className}>
             {value}
         </td>
     )

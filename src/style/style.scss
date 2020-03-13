@@ -17,6 +17,7 @@ table {
   border-collapse: collapse;
   min-width: 100%;
   grid-template-columns: repeat(13, minmax(80px, 0.7fr));
+  gap:5px;
 }
 
 thead,
@@ -31,6 +32,8 @@ td {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  display: flex;
+  color: #f8f6ff;
 }
 
 th {
@@ -53,9 +56,9 @@ td {
   color: #808080;
 }
 
-tr:nth-child(even) td {
-  background: #f8f6ff;
-}
+//tr:nth-child(even) td {
+//  background: #f8f6ff;
+//}
 
 .pagination {
   display: inline-block;
@@ -90,7 +93,7 @@ tr:nth-child(even) td {
   display: none;
   position: fixed;
   background-color: #f1f1f1;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
@@ -142,19 +145,48 @@ tr:nth-child(even) td {
 .textBlock {
   text-align: left;
   color: cadetblue;
+  text-overflow: ellipsis
 }
 
- span {
-  color: cadetblue;
-}
-
-
-.booleanBlock:before {
+.booleanBlockYes:before {
   content: "\e3ba";
   font-family: "Material Icons", serif;
   font-size: 20px;
-  color: rgb(255, 112, 62);
+  color: rgb(76, 175, 80);
 }
+
+.booleanBlockNo:before {
+  content: "\e888";
+  font-family: "Material Icons", serif;
+  font-size: 20px;
+  color: #f50057;
+}
+
+.windowLogo {
+  background-image: url("../assets/icons/Windows_logo_-_2012.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.macLogo {
+  background-image: url("../assets/icons/MacOS_logo.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.linuxLogo {
+  background-image: url("../assets/icons/Tux.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.bsdLogo {
+  background-image: url("../assets/icons/BSD_wordmark.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+
 
 
 

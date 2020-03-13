@@ -1,4 +1,5 @@
 import {
+    COMPLEX_SORT,
     FILTER, FILTER_ITEM,
     MOVE_PAGE,
     SET_PAGE,
@@ -21,7 +22,6 @@ const initialState = {
 
 
 function directorsRootReducer(state = initialState, action) {
-    console.log('action: ', action)
     switch (action.type) {
         case SORT:
             return state;
@@ -62,7 +62,7 @@ function directorsRootReducer(state = initialState, action) {
             return Object.assign({}, state, {tableData: [...state.tableData]}, {tableHeaders: [...state.tableHeaders]});
 
         case FILTER:
-            return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => x.OpSys === action.value)]} );
+            return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => x.SurveyLength.toLowerCase().indexOf(action.value.toLowerCase()) !== -1)]} );
         case FILTER_ITEM:
             if(action.value.TITLE === 'Number') {
                 return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => x[action.value.TITLE] < action.value.VALUE)]});
@@ -70,10 +70,24 @@ function directorsRootReducer(state = initialState, action) {
             else {
                 return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => x[action.value.TITLE] === action.value.VALUE)]});
             }
+        case COMPLEX_SORT:
+            console.log('COMPLEX_SORT: ', action.value)
+
+            return Object.assign({}, state, {tableData: [...state.originalData.sort(fieldSorter(action.value))]});
         default:
             return state;
     }
 }
+
+const fieldSorter = (fields) => (a, b) => fields.map(o => {
+    let dir = 1;
+
+    if (o.SORT === 'ASC') {
+        dir = -1;
+    }
+    o = o.TITLE;
+    return a[o] > b[o] ? dir : a[o] < b[o] ? -(dir) : 0;
+}).reduce((p, n) => p ? p : n, 0);
 
 export default directorsRootReducer;
 
