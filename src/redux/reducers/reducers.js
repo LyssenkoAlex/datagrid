@@ -12,7 +12,7 @@ import {headers} from "../../utils/consts";
 
 const initialState = {
     tableData: rowData,
-    originalData:rowData,
+    originalData: rowData,
     rowsPerPage: 10,
     selectedPage: 0,
     pageRange: [...Array(Math.ceil(rowData.length / 10)).keys()],
@@ -22,6 +22,7 @@ const initialState = {
 
 
 function directorsRootReducer(state = initialState, action) {
+    let sortColumn;
     switch (action.type) {
         case SORT:
             return state;
@@ -42,38 +43,39 @@ function directorsRootReducer(state = initialState, action) {
                     return 0;
                 });
             } else {
-                if(action.column.SORT === 'DESC') {
+                if (action.column.SORT === 'DESC') {
                     state.tableData.sort((a, b) => Number(a[action.column.TITLE]) - Number(b[action.column.TITLE]));
-                }
-                else {
+                } else {
                     state.tableData.sort((a, b) => Number(b[action.column.TITLE]) - Number(a[action.column.TITLE]));
                 }
             }
 
 
-            if(state.tableHeaders.filter((x) => x.TITLE === action.column.TITLE)[0].SORT === 'ASC')
-            {
+            if (state.tableHeaders.filter((x) => x.TITLE === action.column.TITLE)[0].SORT === 'ASC') {
                 state.tableHeaders.filter((x) => x.TITLE === action.column.TITLE)[0].SORT = 'DESC'
-            }
-            else {
+            } else {
                 state.tableHeaders.filter((x) => x.TITLE === action.column.TITLE)[0].SORT = 'ASC'
             }
 
             return Object.assign({}, state, {tableData: [...state.tableData]}, {tableHeaders: [...state.tableHeaders]});
 
         case FILTER:
-            return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => x.SurveyLength.toLowerCase().indexOf(action.value.toLowerCase()) !== -1)]} );
+            return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => x.SurveyLength.toLowerCase().indexOf(action.value.toLowerCase()) !== -1)]});
         case FILTER_ITEM:
-            if(action.value.TITLE === 'Number') {
+            if (action.value.TITLE === 'Number') {
                 return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => x[action.value.TITLE] < action.value.VALUE)]});
-            }
-            else {
+            } else {
                 return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => x[action.value.TITLE] === action.value.VALUE)]});
             }
         case COMPLEX_SORT:
-            console.log('COMPLEX_SORT: ', action.value)
 
-            return Object.assign({}, state, {tableData: [...state.originalData.sort(fieldSorter(action.value))]});
+            if (action.value.MODE === 'SINGLE') {
+                state.tableHeaders.forEach((x) => x.TO_SORT = false)
+            }
+            state.tableHeaders.filter((x) => x.TITLE === action.value.column.TITLE)[0].SORT = action.value.column.SORT;
+            state.tableHeaders.filter((x) => x.TITLE === action.value.column.TITLE)[0].TO_SORT = true;
+            sortColumn = state.tableHeaders.filter((x) => x.TO_SORT === true);
+            return Object.assign({}, state, {tableData: [...state.originalData.sort(fieldSorter(sortColumn))]}, {tableHeaders: [...state.tableHeaders]});
         default:
             return state;
     }
