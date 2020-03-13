@@ -1,7 +1,7 @@
 import {
     COMPLEX_SORT,
     FILTER, FILTER_ITEM,
-    MOVE_PAGE,
+    MOVE_PAGE, SELECT_ROW,
     SET_PAGE,
     SORT, SORT_COLUMN,
 } from "../actions/actions";
@@ -30,35 +30,6 @@ function directorsRootReducer(state = initialState, action) {
             return Object.assign({}, state, {selectedPage: action.number});
         case MOVE_PAGE:
             return Object.assign({}, state, {pageRangeDisplay: state.pageRangeDisplay + action.number});
-        case SORT_COLUMN:
-            if (action.column.TYPE === 'String') {
-                state.tableData.sort((a, b) => {
-
-                    if (a[action.column.TITLE] < b[action.column.TITLE]) {
-                        return action.column.SORT === 'ASC' ? -1 : 1;
-                    }
-                    if (a[action.column.TITLE] > b[action.column.TITLE]) {
-                        return action.column.SORT === 'ASC' ? 1 : -1;
-                    }
-                    return 0;
-                });
-            } else {
-                if (action.column.SORT === 'DESC') {
-                    state.tableData.sort((a, b) => Number(a[action.column.TITLE]) - Number(b[action.column.TITLE]));
-                } else {
-                    state.tableData.sort((a, b) => Number(b[action.column.TITLE]) - Number(a[action.column.TITLE]));
-                }
-            }
-
-
-            if (state.tableHeaders.filter((x) => x.TITLE === action.column.TITLE)[0].SORT === 'ASC') {
-                state.tableHeaders.filter((x) => x.TITLE === action.column.TITLE)[0].SORT = 'DESC'
-            } else {
-                state.tableHeaders.filter((x) => x.TITLE === action.column.TITLE)[0].SORT = 'ASC'
-            }
-
-            return Object.assign({}, state, {tableData: [...state.tableData]}, {tableHeaders: [...state.tableHeaders]});
-
         case FILTER:
             return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => x.SurveyLength.toLowerCase().indexOf(action.value.toLowerCase()) !== -1)]});
         case FILTER_ITEM:
@@ -76,7 +47,15 @@ function directorsRootReducer(state = initialState, action) {
             state.tableHeaders.filter((x) => x.TITLE === action.value.column.TITLE)[0].TO_SORT = true;
             sortColumn = state.tableHeaders.filter((x) => x.TO_SORT === true);
             return Object.assign({}, state, {tableData: [...state.originalData.sort(fieldSorter(sortColumn))]}, {tableHeaders: [...state.tableHeaders]});
+        case SELECT_ROW:
+            state.tableData.filter((x) => x.ROW_ID === action.value.ROW_ID)[0].SELECTED = true;
+              return Object.assign({}, state, {tableData: [...state.tableData]} );
         default:
+            state.tableData.forEach((x, y) => {
+                 x.ROW_ID = y;
+                 x.SELECTED = false;
+                 return x;
+            });
             return state;
     }
 }

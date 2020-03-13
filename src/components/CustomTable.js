@@ -4,6 +4,7 @@ import '../style/style.scss'
 import TableHeader from "./TableHeader";
 import {green} from '@material-ui/core/colors';
 import {DATA_TYPES} from "../utils/consts";
+import {selectRow} from "../redux/actions/actions";
 
 
 export default function CustomTable() {
@@ -11,15 +12,17 @@ export default function CustomTable() {
     const tableData = useSelector(state => state.tableData);
     const selectedPage = useSelector(state => state.selectedPage);
     const rowsPerPage = useSelector(state => state.rowsPerPage);
+    const dispatch = useDispatch();
 
     const rowHandler = (e) => {
         console.log('row: ', e)
+        dispatch(selectRow({ROW_ID:e, SELECTED:true}))
     }
 
     let cells = tableData.slice(selectedPage, selectedPage + rowsPerPage).map((row, index) => {
 
         return (
-            <tr key={`row_${index}`} onClick={(e) => rowHandler(e)}>
+            <tr key={`${row.ROW_ID}`} onClick={() => rowHandler(row.ROW_ID)}>
                 <CellRender value={row.Age} index={index} type={DATA_TYPES.NUMBER_TYPE}/>
                 <td key={`Country_${index}`}>{row.Country}</td>
                 <CellRender value={row.Employment} index={index} type={DATA_TYPES.STRING_TYPE}/>
