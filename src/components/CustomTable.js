@@ -12,23 +12,30 @@ export default function CustomTable() {
     const selectedPage = useSelector(state => state.selectedPage);
     const rowsPerPage = useSelector(state => state.rowsPerPage);
 
-    let cells = tableData.slice(selectedPage, selectedPage + rowsPerPage).map((row, index) =>
-        <tr key={`row_${index}`}>
-            <CellRender value={row.Age} index={index} type={DATA_TYPES.NUMBER_TYPE}/>
-            <td key={`Country_${index}`}>{row.Country}</td>
-            <CellRender value={row.Employment} index={index} type={DATA_TYPES.STRING_TYPE}/>
-            <td key={`Gender_${index}`}>{row.Gender}</td>
-            <CellRender value={row.Hobbyist} index={index} type={DATA_TYPES.BOOLEAN_TYPE}/>
-            <td key={`LanguageWorkedWith_${index}`}>{row.LanguageWorkedWith}</td>
-            <CellRender value={row.MainBranch} index={index} type={DATA_TYPES.STRING_TYPE}/>
-            <CellRender value={row.OpSys} index={index} type={DATA_TYPES.OS}/>
-            <td key={`Respondent_${index}`}>{row.Respondent}</td>
-            <td key={`Student_${index}`}>{row.Student}</td>
-            <td key={`SurveyLength_${index}`}>{row.SurveyLength}</td>
-            <td key={`WebFrameWorkedWith_${index}`}>{row.WebFrameWorkedWith}</td>
-            <td key={`YearsCode_${index}`}>{row.YearsCode}</td>
-        </tr>
-    );
+    const rowHandler = (e) => {
+        console.log('row: ', e)
+    }
+
+    let cells = tableData.slice(selectedPage, selectedPage + rowsPerPage).map((row, index) => {
+
+        return (
+            <tr key={`row_${index}`} onClick={(e) => rowHandler(e)}>
+                <CellRender value={row.Age} index={index} type={DATA_TYPES.NUMBER_TYPE}/>
+                <td key={`Country_${index}`}>{row.Country}</td>
+                <CellRender value={row.Employment} index={index} type={DATA_TYPES.STRING_TYPE}/>
+                <td key={`Gender_${index}`}>{row.Gender}</td>
+                <CellRender value={row.Hobbyist} index={index} type={DATA_TYPES.BOOLEAN_TYPE}/>
+                <td key={`LanguageWorkedWith_${index}`}>{row.LanguageWorkedWith}</td>
+                <CellRender value={row.MainBranch} index={index} type={DATA_TYPES.STRING_TYPE}/>
+                <CellRender value={row.OpSys} index={index} type={DATA_TYPES.OS}/>
+                <td key={`Respondent_${index}`}>{row.Respondent}</td>
+                <td key={`Student_${index}`}>{row.Student}</td>
+                <td key={`SurveyLength_${index}`}>{row.SurveyLength}</td>
+                <td key={`WebFrameWorkedWith_${index}`}>{row.WebFrameWorkedWith}</td>
+                <td key={`YearsCode_${index}`}>{row.YearsCode}</td>
+            </tr>
+        )
+    });
 
     return (
         <table>
