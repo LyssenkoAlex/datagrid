@@ -38,31 +38,37 @@ export default function CustomTable() {
 
         return (
             <tr key={`${row.ROW_ID}`} onClick={() => rowHandler(row)}>
+                <td key={`Respondent_${index}`} className={'zui-sticky-col'}
+                    style={{'display': styleRespondent ? '' : 'none'}}>{row.Respondent}</td>
                 <CellRender value={row.Age} index={index} type={DATA_TYPES.NUMBER_TYPE}/>
-                <td key={`Country_${index}`} className={rowCell} style={{'display': styleCountry ? '' : 'none'}}>{row.Country}</td>
+                <td key={`Country_${index}`} className={rowCell}
+                    style={{'display': styleCountry ? '' : 'none'}}>{row.Country}</td>
                 <CellRender value={row.Employment} index={index} type={DATA_TYPES.STRING_TYPE}/>
-                <td key={`Gender_${index}`} className={rowCell} style={{'display': styleGender ? '' : 'none'}}>{row.Gender}</td>
+                <td key={`Gender_${index}`} className={rowCell}
+                    style={{'display': styleGender ? '' : 'none'}}>{row.Gender}</td>
                 <CellRender value={row.Hobbyist} index={index} type={DATA_TYPES.BOOLEAN_TYPE}/>
                 <td key={`LanguageWorkedWith_${index}`} className={rowCell}>{row.LanguageWorkedWith}</td>
                 <CellRender value={row.MainBranch} index={index} type={DATA_TYPES.STRING_TYPE}/>
                 <CellRender value={row.OpSys} index={index} type={DATA_TYPES.OS}/>
-                <td key={`Respondent_${index}`} className={rowCell} style={{'display': styleRespondent ? '' : 'none'}}>{row.Respondent}</td>
                 <td key={`Student_${index}`} className={rowCell}>{row.Student}</td>
                 <td key={`SurveyLength_${index}`} className={rowCell}>{row.SurveyLength}</td>
                 <td key={`WebFrameWorkedWith_${index}`} className={rowCell}>{row.WebFrameWorkedWith}</td>
-                <td key={`YearsCode_${index}`} className={rowCell} style={{'display': styleYearsCode ? '' : 'none'}}>{row.YearsCode}</td>
+                <td key={`YearsCode_${index}`} className={rowCell}
+                    style={{'display': styleYearsCode ? '' : 'none'}}>{row.YearsCode}</td>
             </tr>
         )
     });
 
     return (
-        <div className='withscroll'>
-        <table>
-            <TableHeader/>
-            <tbody>
-            {cells}
-            </tbody>
-        </table>
+        <div className="zui-wrapper">
+            <div className="zui-scroller">
+                <table className="zui-table">
+                    <TableHeader/>
+                    <tbody>
+                    {cells}
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 }

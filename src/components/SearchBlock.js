@@ -161,7 +161,7 @@ export function SearchBlock() {
             <FormControlLabel
                 control={
                     <Checkbox
-                        checked={tableHeaders[1].SHOW_COL}
+                        checked={tableHeaders[2].SHOW_COL}
                         value="checkedB"
                         color="primary"
                         onChange={() => handlerShowHideColumn('Country')}
@@ -173,7 +173,7 @@ export function SearchBlock() {
             <FormControlLabel
                 control={
                     <Checkbox
-                        checked={tableHeaders[3].SHOW_COL}
+                        checked={tableHeaders[4].SHOW_COL}
                         value="checkedB"
                         color="primary"
                         onChange={() => handlerShowHideColumn('Gender')}
@@ -184,7 +184,7 @@ export function SearchBlock() {
             <FormControlLabel
                 control={
                     <Checkbox
-                        checked={tableHeaders[8].SHOW_COL}
+                        checked={tableHeaders[0].SHOW_COL}
                         value="checkedB"
                         color="primary"
                         onChange={() => handlerShowHideColumn('Respondent')}

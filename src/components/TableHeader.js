@@ -69,6 +69,10 @@ export default function TableHeader() {
             showColumn = 'hideColumn'
         }
 
+        if(index === 1) {
+            showColumn = 'zui-sticky-col';
+        }
+
         return (
             <th key={`th_${index}`} className={showColumn}>
               <span>
