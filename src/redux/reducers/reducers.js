@@ -1,9 +1,9 @@
 import {
-    COMPLEX_SORT,
+    COMPLEX_SORT, DELETE_ROW,
     FILTER, FILTER_ITEM,
     MOVE_PAGE, SELECT_ROW,
     SET_PAGE,
-    SORT, SORT_COLUMN,
+    SORT,
 } from "../actions/actions";
 import rowData from '../../data/data_source';
 import PropTypes from 'prop-types';
@@ -24,20 +24,23 @@ const initialState = {
 function directorsRootReducer(state = initialState, action) {
     let sortColumn;
     switch (action.type) {
-        case SORT:
-            return state;
+
         case SET_PAGE:
             return Object.assign({}, state, {selectedPage: action.number});
+
         case MOVE_PAGE:
             return Object.assign({}, state, {pageRangeDisplay: state.pageRangeDisplay + action.number});
+
         case FILTER:
             return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => x.SurveyLength.toLowerCase().indexOf(action.value.toLowerCase()) !== -1)]});
+
         case FILTER_ITEM:
             if (action.value.TITLE === 'Number') {
                 return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => x[action.value.TITLE] < action.value.VALUE)]});
             } else {
                 return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => x[action.value.TITLE] === action.value.VALUE)]});
             }
+
         case COMPLEX_SORT:
 
             if (action.value.MODE === 'SINGLE') {
@@ -47,14 +50,19 @@ function directorsRootReducer(state = initialState, action) {
             state.tableHeaders.filter((x) => x.TITLE === action.value.column.TITLE)[0].TO_SORT = true;
             sortColumn = state.tableHeaders.filter((x) => x.TO_SORT === true);
             return Object.assign({}, state, {tableData: [...state.originalData.sort(fieldSorter(sortColumn))]}, {tableHeaders: [...state.tableHeaders]});
+
         case SELECT_ROW:
-            state.tableData.filter((x) => x.ROW_ID === action.value.ROW_ID)[0].SELECTED = true;
-              return Object.assign({}, state, {tableData: [...state.tableData]} );
+            console.log('SELECT_ROW', action.value)
+            state.tableData.filter((x) => x.ROW_ID === action.value.row.ROW_ID)[0].SELECTED = !action.value.row.SELECTED;
+            return Object.assign({}, state, {tableData: [...state.tableData]});
+
+        case DELETE_ROW:
+            return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => !x.SELECTED )]});
         default:
             state.tableData.forEach((x, y) => {
-                 x.ROW_ID = y;
-                 x.SELECTED = false;
-                 return x;
+                x.ROW_ID = y;
+                x.SELECTED = false;
+                return x;
             });
             return state;
     }

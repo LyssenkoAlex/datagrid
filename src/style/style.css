@@ -184,4 +184,8 @@ td {
   background-size: contain;
 }
 
+.selectedRow {
+  background-color: darkgrey;
+}
+
 /*# sourceMappingURL=style.css.map */

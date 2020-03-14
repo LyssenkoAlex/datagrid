@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {useDispatch} from "react-redux";
-import {filterItem, filterData} from "../redux/actions/actions";
+import {useDispatch, useSelector} from "react-redux";
+import {filterItem, filterData, deleteRows} from "../redux/actions/actions";
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -11,6 +11,10 @@ import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
 import PregnantWomanIcon from '@material-ui/icons/PregnantWoman';
 import NotListedLocationIcon from '@material-ui/icons/NotListedLocation';
 import TextField from '@material-ui/core/TextField';
+import DescriptionIcon from '@material-ui/icons/Description';
+import Button from '@material-ui/core/Button';
+import {arrayToCSV} from "../utils/helpers";
+import RemoveIcon from '@material-ui/icons/Remove';
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -25,7 +29,11 @@ const useStyles = makeStyles(theme => ({
             margin: theme.spacing(1),
             width: 200,
         },
-    }
+
+    },
+    button: {
+        margin: '8px',
+    },
 }));
 
 
@@ -47,6 +55,26 @@ export function SearchBlock() {
 
     const handleChange = event => {
         dispatch(filterItem(event.target.value));
+    };
+
+    const tableData = useSelector(state => state.tableData);
+    const selectedPage = useSelector(state => state.selectedPage);
+    const rowsPerPage = useSelector(state => state.rowsPerPage);
+
+
+    const createCSV = () => {
+        let csv =  arrayToCSV({data:tableData.slice(selectedPage, selectedPage + rowsPerPage)});
+        let filename = 'export.csv';
+        csv = 'data:text/csv;charset=utf-8,' + csv;
+        let data = encodeURI(csv);
+        let link = document.createElement('a');
+        link.setAttribute('href', data);
+        link.setAttribute('download', filename);
+        link.click();
+    };
+
+    const removeSelectedRows =() => {
+        dispatch(deleteRows())
     };
 
 
@@ -97,6 +125,30 @@ export function SearchBlock() {
                         TYPE: 'String'
                     }}><NotListedLocationIcon/></MenuItem>
                 </Select>
+            </FormControl>
+            <FormControl variant="outlined" className={classes.formControl}>
+            <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                className={classes.button}
+                startIcon={<DescriptionIcon />}
+                onClick={() => createCSV()}
+            >
+                CSV
+            </Button>
+            </FormControl>
+            <FormControl variant="outlined" className={classes.formControl}>
+            <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                className={classes.button}
+                startIcon={<RemoveIcon />}
+                onClick={() => removeSelectedRows()}
+            >
+                Remove rows
+            </Button>
             </FormControl>
 
         </div>

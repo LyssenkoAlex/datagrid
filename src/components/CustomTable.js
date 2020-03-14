@@ -14,28 +14,27 @@ export default function CustomTable() {
     const rowsPerPage = useSelector(state => state.rowsPerPage);
     const dispatch = useDispatch();
 
-    const rowHandler = (e) => {
-        console.log('row: ', e)
-        dispatch(selectRow({ROW_ID:e, SELECTED:true}))
-    }
+    const rowHandler = (row) => {
+        dispatch(selectRow({row}))
+    };
 
     let cells = tableData.slice(selectedPage, selectedPage + rowsPerPage).map((row, index) => {
-
+            let rowCell = row.SELECTED ? 'selectedRow' : '';
         return (
-            <tr key={`${row.ROW_ID}`} onClick={() => rowHandler(row.ROW_ID)}>
-                <CellRender value={row.Age} index={index} type={DATA_TYPES.NUMBER_TYPE}/>
-                <td key={`Country_${index}`}>{row.Country}</td>
+            <tr key={`${row.ROW_ID}`} onClick={() => rowHandler(row)}>
+                <CellRender value={row.Age} index={index} type={DATA_TYPES.NUMBER_TYPE} />
+                <td key={`Country_${index}`} className={rowCell}>{row.Country}</td>
                 <CellRender value={row.Employment} index={index} type={DATA_TYPES.STRING_TYPE}/>
-                <td key={`Gender_${index}`}>{row.Gender}</td>
+                <td key={`Gender_${index}`} className={rowCell}>{row.Gender}</td>
                 <CellRender value={row.Hobbyist} index={index} type={DATA_TYPES.BOOLEAN_TYPE}/>
-                <td key={`LanguageWorkedWith_${index}`}>{row.LanguageWorkedWith}</td>
+                <td key={`LanguageWorkedWith_${index}`} className={rowCell}>{row.LanguageWorkedWith}</td>
                 <CellRender value={row.MainBranch} index={index} type={DATA_TYPES.STRING_TYPE}/>
                 <CellRender value={row.OpSys} index={index} type={DATA_TYPES.OS}/>
-                <td key={`Respondent_${index}`}>{row.Respondent}</td>
-                <td key={`Student_${index}`}>{row.Student}</td>
-                <td key={`SurveyLength_${index}`}>{row.SurveyLength}</td>
-                <td key={`WebFrameWorkedWith_${index}`}>{row.WebFrameWorkedWith}</td>
-                <td key={`YearsCode_${index}`}>{row.YearsCode}</td>
+                <td key={`Respondent_${index}`} className={rowCell}>{row.Respondent}</td>
+                <td key={`Student_${index}`} className={rowCell}>{row.Student}</td>
+                <td key={`SurveyLength_${index}`} className={rowCell}>{row.SurveyLength}</td>
+                <td key={`WebFrameWorkedWith_${index}`} className={rowCell}>{row.WebFrameWorkedWith}</td>
+                <td key={`YearsCode_${index}`} className={rowCell}>{row.YearsCode}</td>
             </tr>
         )
     });
