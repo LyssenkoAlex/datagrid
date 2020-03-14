@@ -45,6 +45,7 @@ export default function TableHeader() {
     const elements = headers.map((item, index) => {
         let iconUP;
         let iconDown;
+        let showColumn;
 
         if(item.TO_SORT) {
             if(item.SORT === 'ASC') {
@@ -61,8 +62,15 @@ export default function TableHeader() {
             iconDown = grey[500];
         }
 
+        if(item.SHOW_COL) {
+            showColumn = 'showColumn'
+        }
+        else {
+            showColumn = 'hideColumn'
+        }
+
         return (
-            <th key={`th_${index}`}>
+            <th key={`th_${index}`} className={showColumn}>
               <span>
                   {item.DISPLAY}
               </span>

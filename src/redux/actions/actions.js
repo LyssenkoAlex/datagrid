@@ -5,6 +5,7 @@ export const FILTER_ITEM = 'FILTER_ITEM';
 export const COMPLEX_SORT = 'COMPLEX_SORT';
 export const SELECT_ROW = 'SELECT_ROW';
 export const DELETE_ROW = 'DELETE_ROW';
+export const SHOW_HIDE_COLUMN = 'SHOW_HIDE_COLUMN';
 
 
 
@@ -37,4 +38,8 @@ export function selectRow(value) {
 
 export function deleteRows(value) {
     return {type:DELETE_ROW, value}
+}
+
+export function showHideColumn(value) {
+    return {type:SHOW_HIDE_COLUMN, value}
 }

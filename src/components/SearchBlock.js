@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {filterItem, filterData, deleteRows} from "../redux/actions/actions";
+import {filterItem, filterData, deleteRows, showHideColumn} from "../redux/actions/actions";
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -15,6 +15,8 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import Button from '@material-ui/core/Button';
 import {arrayToCSV} from "../utils/helpers";
 import RemoveIcon from '@material-ui/icons/Remove';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -60,10 +62,11 @@ export function SearchBlock() {
     const tableData = useSelector(state => state.tableData);
     const selectedPage = useSelector(state => state.selectedPage);
     const rowsPerPage = useSelector(state => state.rowsPerPage);
+    const tableHeaders = useSelector(state => state.tableHeaders);
 
 
     const createCSV = () => {
-        let csv =  arrayToCSV({data:tableData.slice(selectedPage, selectedPage + rowsPerPage)});
+        let csv = arrayToCSV({data: tableData.slice(selectedPage, selectedPage + rowsPerPage)});
         let filename = 'export.csv';
         csv = 'data:text/csv;charset=utf-8,' + csv;
         let data = encodeURI(csv);
@@ -73,15 +76,20 @@ export function SearchBlock() {
         link.click();
     };
 
-    const removeSelectedRows =() => {
+    const removeSelectedRows = () => {
         dispatch(deleteRows())
+    };
+
+    const handlerShowHideColumn = (column) => {
+        dispatch(showHideColumn(column))
     };
 
 
     return (
         <div className='searchBlock'>
             <form className={classes.root} noValidate autoComplete="off">
-                <TextField id="outlined-search" label="Search field" type="search" variant="outlined" onKeyPress={e => searchData(e)}/>
+                <TextField id="outlined-search" label="Search field" type="search" variant="outlined"
+                           onKeyPress={e => searchData(e)}/>
             </form>
 
             <FormControl variant="outlined" className={classes.formControl}>
@@ -127,30 +135,74 @@ export function SearchBlock() {
                 </Select>
             </FormControl>
             <FormControl variant="outlined" className={classes.formControl}>
-            <Button
-                variant="contained"
-                color="primary"
-                size="small"
-                className={classes.button}
-                startIcon={<DescriptionIcon />}
-                onClick={() => createCSV()}
-            >
-                CSV
-            </Button>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    className={classes.button}
+                    startIcon={<DescriptionIcon/>}
+                    onClick={() => createCSV()}
+                >
+                    CSV
+                </Button>
             </FormControl>
             <FormControl variant="outlined" className={classes.formControl}>
-            <Button
-                variant="contained"
-                color="primary"
-                size="small"
-                className={classes.button}
-                startIcon={<RemoveIcon />}
-                onClick={() => removeSelectedRows()}
-            >
-                Remove rows
-            </Button>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    className={classes.button}
+                    startIcon={<RemoveIcon/>}
+                    onClick={() => removeSelectedRows()}
+                >
+                    Remove rows
+                </Button>
             </FormControl>
+            <FormControlLabel
+                control={
+                    <Checkbox
+                        checked={tableHeaders[1].SHOW_COL}
+                        value="checkedB"
+                        color="primary"
+                        onChange={() => handlerShowHideColumn('Country')}
+                    />
+                }
+                label="Country"
+            />
 
+            <FormControlLabel
+                control={
+                    <Checkbox
+                        checked={tableHeaders[3].SHOW_COL}
+                        value="checkedB"
+                        color="primary"
+                        onChange={() => handlerShowHideColumn('Gender')}
+                    />
+                }
+                label="Gender"
+            />
+            <FormControlLabel
+                control={
+                    <Checkbox
+                        checked={tableHeaders[8].SHOW_COL}
+                        value="checkedB"
+                        color="primary"
+                        onChange={() => handlerShowHideColumn('Respondent')}
+                    />
+                }
+                label="Respondent"
+            />
+            <FormControlLabel
+                control={
+                    <Checkbox
+                        checked={tableHeaders[12].SHOW_COL}
+                        value="checkedB"
+                        color="primary"
+                        onChange={() => handlerShowHideColumn('YearsCode')}
+                    />
+                }
+                label="YearsCode"
+            />
         </div>
     )
 }

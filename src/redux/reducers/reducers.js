@@ -2,7 +2,7 @@ import {
     COMPLEX_SORT, DELETE_ROW,
     FILTER, FILTER_ITEM,
     MOVE_PAGE, SELECT_ROW,
-    SET_PAGE,
+    SET_PAGE, SHOW_HIDE_COLUMN,
     SORT,
 } from "../actions/actions";
 import rowData from '../../data/data_source';
@@ -23,6 +23,7 @@ const initialState = {
 
 function directorsRootReducer(state = initialState, action) {
     let sortColumn;
+    let show;
     switch (action.type) {
 
         case SET_PAGE:
@@ -52,12 +53,17 @@ function directorsRootReducer(state = initialState, action) {
             return Object.assign({}, state, {tableData: [...state.originalData.sort(fieldSorter(sortColumn))]}, {tableHeaders: [...state.tableHeaders]});
 
         case SELECT_ROW:
-            console.log('SELECT_ROW', action.value)
             state.tableData.filter((x) => x.ROW_ID === action.value.row.ROW_ID)[0].SELECTED = !action.value.row.SELECTED;
             return Object.assign({}, state, {tableData: [...state.tableData]});
 
         case DELETE_ROW:
-            return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => !x.SELECTED )]});
+            return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => !x.SELECTED)]});
+
+        case SHOW_HIDE_COLUMN:
+            show = state.tableHeaders.filter((x) => x.TITLE === action.value)[0].SHOW_COL;
+            state.tableHeaders.filter((x) => x.TITLE === action.value)[0].SHOW_COL = !show;
+            return Object.assign({}, state, {tableHeaders: [...state.tableHeaders]});
+
         default:
             state.tableData.forEach((x, y) => {
                 x.ROW_ID = y;

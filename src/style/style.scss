@@ -13,18 +13,18 @@ body {
 }
 
 table {
-  display: grid;
-  border-collapse: collapse;
-  min-width: 100%;
-  grid-template-columns: repeat(13, minmax(80px, 0.7fr));
-  gap:5px;
-  border: 2px solid grey;
+  //display: grid;
+  //border-collapse: collapse;
+  //min-width: 100%;
+  //grid-template-columns: repeat(13, minmax(80px, 0.7fr));
+  //gap:5px;
+  //border: 2px solid grey;
 }
 
 thead,
 tbody,
 tr {
-  display: contents;
+  //display: contents;
 }
 
 th,
@@ -33,7 +33,7 @@ td {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  display: flex;
+  //display: flex;
   color: #f8f6ff;
 }
 
@@ -154,6 +154,7 @@ td {
   font-family: "Material Icons", serif;
   font-size: 20px;
   color: rgb(76, 175, 80);
+  display: contents;
 }
 
 .booleanBlockNo:before {
@@ -161,6 +162,7 @@ td {
   font-family: "Material Icons", serif;
   font-size: 20px;
   color: #f50057;
+  display: contents;
 }
 
 .windowLogo {
@@ -191,7 +193,20 @@ td {
   background-color: darkgrey;
 }
 
+.hideColumn {
+  display: none;
+}
 
+
+.showColumn {
+
+}
+
+.withscroll {
+  width: 85%;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
 
 
 
