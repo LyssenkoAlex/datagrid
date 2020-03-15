@@ -2,8 +2,7 @@ import {
     COMPLEX_SORT, DELETE_ROW,
     FILTER, FILTER_ITEM,
     MOVE_PAGE, SELECT_ROW,
-    SET_PAGE, SHOW_HIDE_COLUMN,
-    SORT,
+    SET_PAGE, SHOW_HIDE_COLUMN
 } from "../actions/actions";
 import rowData from '../../data/data_source';
 import PropTypes from 'prop-types';
@@ -13,7 +12,7 @@ import {headers} from "../../utils/consts";
 const initialState = {
     tableData: rowData,
     originalData: rowData,
-    rowsPerPage: 10,
+    rowsPerPage: 200,
     selectedPage: 0,
     pageRange: [...Array(Math.ceil(rowData.length / 10)).keys()],
     pageRangeDisplay: 0,

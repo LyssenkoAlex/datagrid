@@ -1,21 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import IconButton from '@material-ui/core/IconButton';
 import '../style/style.scss';
 import {complexSort} from "../redux/actions/actions";
-import {makeStyles} from '@material-ui/core/styles';
 import {red,  grey} from '@material-ui/core/colors';
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        display: 'flex',
-    },
-    paper: {
-        marginRight: theme.spacing(2),
-    },
-}));
+
 
 
 export default function TableHeader() {
@@ -42,7 +34,7 @@ export default function TableHeader() {
         }
     };
 
-    const elements = headers.map((item, index) => {
+    const elements = headers.sort((x, y) => x.ORDER - y.ORDER).map((item, index) => {
         let iconUP;
         let iconDown;
         let showColumn;
@@ -69,7 +61,7 @@ export default function TableHeader() {
             showColumn = 'hideColumn'
         }
 
-        if(index === 1) {
+        if(index === 0) {
             showColumn = 'zui-sticky-col';
         }
 

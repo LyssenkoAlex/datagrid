@@ -1,8 +1,7 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import {useDispatch, useSelector} from 'react-redux'
 import '../style/style.scss'
 import TableHeader from "./TableHeader";
-import {green} from '@material-ui/core/colors';
 import {DATA_TYPES} from "../utils/consts";
 import {selectRow} from "../redux/actions/actions";
 
@@ -15,9 +14,30 @@ export default function CustomTable() {
     const dispatch = useDispatch();
     const headers = useSelector(state => state.tableHeaders);
 
+    const [loadMore, setLoadMore] = useState(true);
+
+    useEffect(() => {
+        getData(loadMore);
+        setLoadMore(false);
+    }, [loadMore]);
+
     const rowHandler = (row) => {
         dispatch(selectRow({row}))
     };
+
+    useEffect(() => {
+        const list = document.getElementById('idDataGrid');
+        list.addEventListener('scroll', (e) => {
+            console.log('works')
+        });
+    }, []);
+
+
+    const getData = (load) => {
+        console.log('load', load);
+        return null;
+    };
+
 
     let cells = tableData.slice(selectedPage, selectedPage + rowsPerPage).map((row, index) => {
         let rowCell;
@@ -30,11 +50,11 @@ export default function CustomTable() {
             default:
                 rowCell = '';
         }
+
         let styleYearsCode = headers.filter((x) => x.TITLE === 'YearsCode')[0].SHOW_COL;
         let styleCountry = headers.filter((x) => x.TITLE === 'Country')[0].SHOW_COL;
         let styleGender = headers.filter((x) => x.TITLE === 'Gender')[0].SHOW_COL;
         let styleRespondent = headers.filter((x) => x.TITLE === 'Respondent')[0].SHOW_COL;
-
 
         return (
             <tr key={`${row.ROW_ID}`} onClick={() => rowHandler(row)}>
@@ -62,7 +82,7 @@ export default function CustomTable() {
     return (
         <div className="zui-wrapper">
             <div className="zui-scroller">
-                <table className="zui-table">
+                <table className="zui-table" id='idDataGrid'>
                     <TableHeader/>
                     <tbody>
                     {cells}
@@ -107,6 +127,8 @@ function CellRender({value, index, type}) {
                 case  'BSD':
                     className = 'bsdLogo';
                     break;
+                default:
+                    className = '';
             }
             value = '';
             break;

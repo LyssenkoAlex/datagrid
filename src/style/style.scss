@@ -250,5 +250,18 @@ td {
   width: 85%;
 }
 
+table.scroll {
+  width: 1500px; /* 140px * 5 column + 16px scrollbar width */
+  border-spacing: 0;
+  border: 2px solid black;
+}
 
+table.scroll tbody,
+table.scroll thead { display: block; }
+
+table.scroll tbody {
+  height: 500px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 

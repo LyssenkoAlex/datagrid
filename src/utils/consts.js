@@ -8,9 +8,11 @@ export const headers = [
         DISPLAY: 'ID',
         JSON: 'Respondent',
         TO_SORT: false,
-        SHOW_COL: true
+        SHOW_COL: true,
+        ORDER: 1
+
     },
-    {TITLE: 'Age', TYPE: 'Number', SORT: 'ASC', DISPLAY: 'Age', JSON: 'Age', TO_SORT: false, SHOW_COL: true}
+    {TITLE: 'Age', TYPE: 'Number', SORT: 'ASC', DISPLAY: 'Age', JSON: 'Age', TO_SORT: false, SHOW_COL: true, ORDER: 2}
     , {
         TITLE: 'Country',
         TYPE: 'String',
@@ -18,7 +20,9 @@ export const headers = [
         DISPLAY: 'Country',
         JSON: 'Country',
         TO_SORT: false,
-        SHOW_COL: true
+        SHOW_COL: true,
+        ORDER: 3
+
     }
     , {
         TITLE: 'Employment',
@@ -27,9 +31,19 @@ export const headers = [
         DISPLAY: 'Emp',
         JSON: 'Employment',
         TO_SORT: false,
-        SHOW_COL: true
+        SHOW_COL: true,
+        ORDER: 4
     }
-    , {TITLE: 'Gender', TYPE: 'String', SORT: 'ASC', DISPLAY: 'Sex', JSON: 'Gender', TO_SORT: false, SHOW_COL: true}
+    , {
+        TITLE: 'Gender',
+        TYPE: 'String',
+        SORT: 'ASC',
+        DISPLAY: 'Sex',
+        JSON: 'Gender',
+        TO_SORT: false,
+        SHOW_COL: true,
+        ORDER: 5
+    }
     , {
         TITLE: 'Hobbyist',
         TYPE: 'String',
@@ -37,7 +51,8 @@ export const headers = [
         DISPLAY: 'Hobby',
         JSON: 'Hobbyist',
         TO_SORT: false,
-        SHOW_COL: true
+        SHOW_COL: true,
+        ORDER: 6
     }
     , {
         TITLE: 'LanguageWorkedWith',
@@ -45,7 +60,7 @@ export const headers = [
         SORT: 'ASC',
         DISPLAY: 'Skill',
         JSON: 'LanguageWorkedWith',
-        TO_SORT: false, SHOW_COL: true
+        TO_SORT: false, SHOW_COL: true, ORDER: 7
     }
     , {
         TITLE: 'MainBranch',
@@ -54,9 +69,19 @@ export const headers = [
         DISPLAY: 'Branch',
         JSON: 'MainBranch',
         TO_SORT: false,
-        SHOW_COL: true
+        SHOW_COL: true,
+        ORDER: 8
     }
-    , {TITLE: 'OpSys', TYPE: 'String', SORT: 'ASC', DISPLAY: 'OS', JSON: 'OpSys', TO_SORT: false, SHOW_COL: true}
+    , {
+        TITLE: 'OpSys',
+        TYPE: 'String',
+        SORT: 'ASC',
+        DISPLAY: 'OS',
+        JSON: 'OpSys',
+        TO_SORT: false,
+        SHOW_COL: true,
+        ORDER: 9
+    }
     , {
         TITLE: 'Student',
         TYPE: 'String',
@@ -64,7 +89,8 @@ export const headers = [
         DISPLAY: 'Student',
         JSON: 'Student',
         TO_SORT: false,
-        SHOW_COL: true
+        SHOW_COL: true,
+        ORDER: 10
     }
     , {
         TITLE: 'SurveyLength',
@@ -73,7 +99,8 @@ export const headers = [
         DISPLAY: 'Survey',
         JSON: 'SurveyLength',
         TO_SORT: false,
-        SHOW_COL: true
+        SHOW_COL: true,
+        ORDER: 11
     }
     , {
         TITLE: 'WebFrameWorkedWith',
@@ -81,7 +108,8 @@ export const headers = [
         SORT: 'ASC',
         DISPLAY: 'WebFW',
         JSON: 'WebFrameWorkedWith',
-        TO_SORT: false, SHOW_COL: true
+        TO_SORT: false, SHOW_COL: true,
+        ORDER: 12
     }
     , {
         TITLE: 'YearsCode',
@@ -90,7 +118,8 @@ export const headers = [
         DISPLAY: 'Code',
         JSON: 'YearsCode',
         TO_SORT: false,
-        SHOW_COL: true
+        SHOW_COL: true,
+        ORDER: 13
     }
 ];
 
