@@ -1,4 +1,5 @@
 import {
+    CHANGE_ROWS,
     COMPLEX_SORT, DELETE_ROW,
     FILTER, FILTER_ITEM,
     MOVE_PAGE, SELECT_ROW,
@@ -16,7 +17,8 @@ const initialState = {
     selectedPage: 0,
     pageRange: [...Array(Math.ceil(rowData.length / 10)).keys()],
     pageRangeDisplay: 0,
-    tableHeaders: headers
+    tableHeaders: headers,
+    rowBlockNumber: 1
 };
 
 
@@ -63,13 +65,22 @@ function directorsRootReducer(state = initialState, action) {
             state.tableHeaders.filter((x) => x.TITLE === action.value)[0].SHOW_COL = !show;
             return Object.assign({}, state, {tableHeaders: [...state.tableHeaders]});
 
+        case CHANGE_ROWS:
+            state.rowBlockNumber = state.rowBlockNumber + 1;
+
+            return Object.assign({}, state, {
+                    tableData: [...state.originalData.slice((state.rowBlockNumber * 100)
+                        , (state.rowBlockNumber * 100) + 200)]
+                }
+                , {rowBlockNumber: state.rowBlockNumber});
         default:
             state.tableData.forEach((x, y) => {
                 x.ROW_ID = y;
                 x.SELECTED = false;
                 return x;
             });
-            return state;
+
+            return Object.assign({}, state, {tableData: [...state.originalData.slice(0, 200)]});
     }
 }
 

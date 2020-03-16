@@ -3,14 +3,13 @@ import {useDispatch, useSelector} from 'react-redux'
 import '../style/style.scss'
 import TableHeader from "./TableHeader";
 import {DATA_TYPES} from "../utils/consts";
-import {selectRow} from "../redux/actions/actions";
+import {changeRows, selectRow} from "../redux/actions/actions";
 
 
 export default function CustomTable() {
 
     const tableData = useSelector(state => state.tableData);
-    const selectedPage = useSelector(state => state.selectedPage);
-    const rowsPerPage = useSelector(state => state.rowsPerPage);
+    const rowBlockNumber = useSelector(state => state.rowBlockNumber);
     const dispatch = useDispatch();
     const headers = useSelector(state => state.tableHeaders);
 
@@ -26,20 +25,25 @@ export default function CustomTable() {
     };
 
     useEffect(() => {
-        const list = document.getElementById('idDataGrid');
+        const list = document.getElementById('table-scroll');
         list.addEventListener('scroll', (e) => {
-            console.log('works')
-        });
-    }, []);
+            const el = e.target;
 
+            console.log('el.scrollTop: ', el.scrollTop)
+            console.log('event: ', e.deltaY);
+            if(el.scrollTop / 3000  >  rowBlockNumber) {
+                console.log('Math.ceil(el.scrollTop % 10000): ************:', e.deltaY)
+                dispatch(changeRows())
+            }
+        });
+    });
 
     const getData = (load) => {
         console.log('load', load);
         return null;
     };
 
-
-    let cells = tableData.slice(selectedPage, selectedPage + rowsPerPage).map((row, index) => {
+    let cells = tableData.map((row) => {
         let rowCell;
 
         switch (true) {
@@ -58,38 +62,36 @@ export default function CustomTable() {
 
         return (
             <tr key={`${row.ROW_ID}`} onClick={() => rowHandler(row)}>
-                <td key={`Respondent_${index}`} className={'zui-sticky-col'}
-                    style={{'display': styleRespondent ? '' : 'none'}}>{row.Respondent}</td>
-                <CellRender value={row.Age} index={index} type={DATA_TYPES.NUMBER_TYPE}/>
-                <td key={`Country_${index}`} className={rowCell}
+                <th key={`Respondent_${row.ROW_ID}`}
+                    style={{'display': styleRespondent ? '' : 'none'}}>{row.Respondent}</th>
+                <CellRender value={row.Age} index={row.ROW_ID} type={DATA_TYPES.NUMBER_TYPE}/>
+                <td key={`Country_${row.ROW_ID}`} className={rowCell}
                     style={{'display': styleCountry ? '' : 'none'}}>{row.Country}</td>
-                <CellRender value={row.Employment} index={index} type={DATA_TYPES.STRING_TYPE}/>
-                <td key={`Gender_${index}`} className={rowCell}
+                <CellRender value={row.Employment} index={row.ROW_ID} type={DATA_TYPES.STRING_TYPE}/>
+                <td key={`Gender_${row.ROW_ID}`} className={rowCell}
                     style={{'display': styleGender ? '' : 'none'}}>{row.Gender}</td>
-                <CellRender value={row.Hobbyist} index={index} type={DATA_TYPES.BOOLEAN_TYPE}/>
-                <td key={`LanguageWorkedWith_${index}`} className={rowCell}>{row.LanguageWorkedWith}</td>
-                <CellRender value={row.MainBranch} index={index} type={DATA_TYPES.STRING_TYPE}/>
-                <CellRender value={row.OpSys} index={index} type={DATA_TYPES.OS}/>
-                <td key={`Student_${index}`} className={rowCell}>{row.Student}</td>
-                <td key={`SurveyLength_${index}`} className={rowCell}>{row.SurveyLength}</td>
-                <td key={`WebFrameWorkedWith_${index}`} className={rowCell}>{row.WebFrameWorkedWith}</td>
-                <td key={`YearsCode_${index}`} className={rowCell}
+                <CellRender value={row.Hobbyist} index={row.ROW_ID} type={DATA_TYPES.BOOLEAN_TYPE}/>
+                <td key={`LanguageWorkedWith_${row.ROW_ID}`} className={rowCell}>{row.LanguageWorkedWith}</td>
+                <CellRender value={row.MainBranch} index={row.ROW_ID} type={DATA_TYPES.STRING_TYPE}/>
+                <CellRender value={row.OpSys} index={row.ROW_ID} type={DATA_TYPES.OS}/>
+                <td key={`Student_${row.ROW_ID}`} className={rowCell}>{row.Student}</td>
+                <td key={`SurveyLength_${row.ROW_ID}`} className={rowCell}>{row.SurveyLength}</td>
+                <td key={`WebFrameWorkedWith_${row.ROW_ID}`} className={rowCell}>{row.WebFrameWorkedWith}</td>
+                <td key={`YearsCode_${row.ROW_ID}`} className={rowCell}
                     style={{'display': styleYearsCode ? '' : 'none'}}>{row.YearsCode}</td>
             </tr>
         )
     });
 
     return (
-        <div className="zui-wrapper">
-            <div className="zui-scroller">
-                <table className="zui-table" id='idDataGrid'>
+        <div id="table-scroll" className="table-scroll">
+            <table id="main-table" className="main-table">
                     <TableHeader/>
                     <tbody>
                     {cells}
                     </tbody>
                 </table>
             </div>
-        </div>
     )
 }
 
