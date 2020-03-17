@@ -59,15 +59,14 @@ export function SearchBlock() {
     };
 
     const tableData = useSelector(state => state.tableData);
-    const selectedPage = useSelector(state => state.selectedPage);
-    const rowsPerPage = useSelector(state => state.rowsPerPage);
     const tableHeaders = useSelector(state => state.tableHeaders);
 
 
     const createCSV = () => {
-        let csv = arrayToCSV({data: tableData.slice(selectedPage, selectedPage + rowsPerPage)});
-        let filename = 'export.csv';
+        let csv = arrayToCSV({data: tableData});
+        let filename = 'export_data.csv';
         csv = 'data:text/csv;charset=utf-8,' + csv;
+        csv = csv.replace(/#/g,'');
         let data = encodeURI(csv);
         let link = document.createElement('a');
         link.setAttribute('href', data);

@@ -21,6 +21,7 @@ export function arrayToCSV ({data, columnDelimiter = ";", lineDelimiter = "\n"})
             }
 
             result += typeof item[key] === "string" && item[key].includes(columnDelimiter) ? `"${item[key]}"` : item[key];
+            // eslint-disable-next-line no-plusplus
             ctr++
         });
         result += lineDelimiter
