@@ -9,11 +9,12 @@ import rowData from '../../data/data_source';
 import PropTypes from 'prop-types';
 import {headers} from "../../utils/consts";
 
+const NUMBER_OR_ROWS = 50;
 
 const initialState = {
     tableData: rowData,
     originalData: rowData,
-    rowsPerPage: 200,
+    rowsPerPage: NUMBER_OR_ROWS,
     selectedPage: 0,
     pageRange: [...Array(Math.ceil(rowData.length / 10)).keys()],
     pageRangeDisplay: 0,
@@ -34,13 +35,13 @@ function directorsRootReducer(state = initialState, action) {
             return Object.assign({}, state, {pageRangeDisplay: state.pageRangeDisplay + action.number});
 
         case FILTER:
-            return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => x.SurveyLength.toLowerCase().indexOf(action.value.toLowerCase()) !== -1)]});
+            return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => x.SurveyLength.toLowerCase().indexOf(action.value.toLowerCase()) !== -1).slice(0, NUMBER_OR_ROWS)]});
 
         case FILTER_ITEM:
             if (action.value.TITLE === 'Number') {
-                return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => x[action.value.TITLE] < action.value.VALUE)]});
+                return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => x[action.value.TITLE] < action.value.VALUE).slice(0, NUMBER_OR_ROWS)]});
             } else {
-                return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => x[action.value.TITLE] === action.value.VALUE)]});
+                return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => x[action.value.TITLE] === action.value.VALUE).slice(0, NUMBER_OR_ROWS)]});
             }
 
         case COMPLEX_SORT:
@@ -51,14 +52,14 @@ function directorsRootReducer(state = initialState, action) {
             state.tableHeaders.filter((x) => x.TITLE === action.value.column.TITLE)[0].SORT = action.value.column.SORT;
             state.tableHeaders.filter((x) => x.TITLE === action.value.column.TITLE)[0].TO_SORT = true;
             sortColumn = state.tableHeaders.filter((x) => x.TO_SORT === true);
-            return Object.assign({}, state, {tableData: [...state.originalData.sort(fieldSorter(sortColumn))]}, {tableHeaders: [...state.tableHeaders]});
+            return Object.assign({}, state, {tableData: [...state.originalData.sort(fieldSorter(sortColumn)).slice(0, NUMBER_OR_ROWS)]}, {tableHeaders: [...state.tableHeaders]});
 
         case SELECT_ROW:
             state.tableData.filter((x) => x.ROW_ID === action.value.row.ROW_ID)[0].SELECTED = !action.value.row.SELECTED;
             return Object.assign({}, state, {tableData: [...state.tableData]});
 
         case DELETE_ROW:
-            return Object.assign({}, state, {tableData: [...state.originalData.filter((x) => !x.SELECTED)]});
+            return Object.assign({}, state, {tableData: [...state.tableData.filter((x) => !x.SELECTED)]});
 
         case SHOW_HIDE_COLUMN:
             show = state.tableHeaders.filter((x) => x.TITLE === action.value)[0].SHOW_COL;
@@ -66,21 +67,19 @@ function directorsRootReducer(state = initialState, action) {
             return Object.assign({}, state, {tableHeaders: [...state.tableHeaders]});
 
         case CHANGE_ROWS:
-            state.rowBlockNumber = state.rowBlockNumber + 1;
 
-            return Object.assign({}, state, {
-                    tableData: [...state.originalData.slice((state.rowBlockNumber * 100)
-                        , (state.rowBlockNumber * 100) + 200)]
-                }
-                , {rowBlockNumber: state.rowBlockNumber});
+                return Object.assign({}, state, {
+                        tableData: [...state.originalData.slice((state.rowBlockNumber * NUMBER_OR_ROWS) -  NUMBER_OR_ROWS
+                            , (state.rowBlockNumber * NUMBER_OR_ROWS) + NUMBER_OR_ROWS * 2 + 50)]
+                    }
+                    , {rowBlockNumber: state.rowBlockNumber + action.value});
         default:
             state.tableData.forEach((x, y) => {
                 x.ROW_ID = y;
                 x.SELECTED = false;
                 return x;
             });
-
-            return Object.assign({}, state, {tableData: [...state.originalData.slice(0, 200)]});
+            return Object.assign({}, state, {tableData: [...state.originalData.slice(0, NUMBER_OR_ROWS)]});
     }
 }
 

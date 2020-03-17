@@ -90,6 +90,10 @@ tfoot th:first-child {
   z-index: 5;
 }
 
+tr {
+  height: 40px;
+}
+
 .pagination {
   display: inline-block;
 }

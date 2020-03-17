@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {  useEffect } from 'react';
 import {useDispatch, useSelector} from 'react-redux'
 import '../style/style.scss'
 import TableHeader from "./TableHeader";
@@ -9,39 +9,34 @@ import {changeRows, selectRow} from "../redux/actions/actions";
 export default function CustomTable() {
 
     const tableData = useSelector(state => state.tableData);
-    const rowBlockNumber = useSelector(state => state.rowBlockNumber);
     const dispatch = useDispatch();
     const headers = useSelector(state => state.tableHeaders);
-
-    const [loadMore, setLoadMore] = useState(true);
-
-    useEffect(() => {
-        getData(loadMore);
-        setLoadMore(false);
-    }, [loadMore]);
 
     const rowHandler = (row) => {
         dispatch(selectRow({row}))
     };
 
     useEffect(() => {
+        let scrollPos = 0;
         const list = document.getElementById('table-scroll');
         list.addEventListener('scroll', (e) => {
             const el = e.target;
 
-            console.log('el.scrollTop: ', el.scrollTop)
-            console.log('event: ', e.deltaY);
-            if(el.scrollTop / 3000  >  rowBlockNumber) {
-                console.log('Math.ceil(el.scrollTop % 10000): ************:', e.deltaY)
-                dispatch(changeRows())
+            if (el.scrollTop > scrollPos){
+                if (el.scrollTop % el.clientHeight >= 0 && el.scrollTop % el.clientHeight <= 10) {
+                    dispatch(changeRows(1))
+                }
+
+            } else {
+                if (el.scrollTop === 0 ) {
+                     // dispatch(changeRows(-1))
+                }
             }
+
+
+            scrollPos = el.scrollTop;
         });
     });
-
-    const getData = (load) => {
-        console.log('load', load);
-        return null;
-    };
 
     let cells = tableData.map((row) => {
         let rowCell;
